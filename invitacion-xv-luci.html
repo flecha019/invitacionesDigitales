@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación Interactiva</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000000; /* Fondo negro */
+        }
+        .container {
+            position: relative;
+            width: 80%;
+            max-width: 600px;
+            height: 100%; /* Mantén la altura relativa */
+        }
+        .media {
+            position: absolute; /* Permite posicionamiento relativo al contenedor */
+            top: 50%; /* Centra verticalmente */
+            left: 50%; /* Centra horizontalmente */
+            transform: translate(-50%, -50%); /* Ajusta el anclaje al centro */
+            display: none; /* Oculto inicialmente */
+            /*max-width: 300px; /* Limita el ancho máximo */
+        }
+        .principales {
+            width: 100%; /* Ajusta el tamaño del GIF */
+        }
+        #gif-inmovil {
+            display: block; /* El GIF inmóvil se muestra inicialmente */
+            cursor: pointer; /* Cambia el cursor para indicar que es interactivo */
+        }
+        #gif-animado {
+            display: none; /* Oculto inicialmente */
+        }
+        .button-img {
+            display: none;
+            position: absolute;
+            cursor: pointer;
+        }
+        .location {
+            display: none;
+            top: 49%;
+            right: 1.7%;
+            width: 90px; /* Tamaño de los botones */
+        }
+        .confirm {
+            display: none;
+            top: 63%;
+            left: 1.3%;
+            width: 104px; /* Tamaño de los botones */
+        }
+    </style>    
+</head>
+<body>
+    <div class="container">
+        <!-- GIF inmóvil inicial -->
+        <img id="gif-inmovil" src="resources/abrir-inmovil.png" alt="GIF inmóvil inicial" class="media">
+
+        <!-- GIF animado del botón -->
+        <img id="gif-animado" src="resources/abrir-invitacion.gif" alt="GIF animado del botón" class="media">
+
+        <!-- GIF de bienvenida -->
+        <img id="gif-bienvenida" src="resources/invitacion-xv-luci.gif" alt="GIF de bienvenida" class="media principales">
+
+        <!-- GIF de información (bucle) -->
+        <img id="gif-informacion" src="resources/informacion.gif" alt="GIF de información" class="media principales">
+
+        <!-- Botones interactivos -->
+        <a href="https://maps.app.goo.gl/nfsci5PnaCamMnkFA" target="_blank">
+            <img id="botonUbicacion" src="resources/pin-ubicacion-neon.png" alt="Ubicación" class="button-img location">
+        </a>
+        <a href="https://wa.link/2tzw4c" target="_blank">
+            <img id="botonConfirmar" src="resources/like-neon.png" alt="Confirmacion" class="button-img confirm">
+        </a>
+    </div>
+
+    <!-- Música de fondo -->
+    <audio id="music" src="resources/dancing-queen-bucle.mp3"></audio>
+
+    <script>
+        // Elementos del DOM
+        const gifInmovil = document.getElementById('gif-inmovil'); // GIF inmóvil inicial
+        const gifAnimado = document.getElementById('gif-animado'); // GIF animado del botón
+        const gifBienvenida = document.getElementById('gif-bienvenida'); // GIF de bienvenida
+        const gifInformacion = document.getElementById('gif-informacion'); // GIF de información
+
+        const botonUbicacion = document.getElementById('botonUbicacion');   // Boton de ubicación
+        const botonConfirmar = document.getElementById('botonConfirmar');   // Boton de confirmación
+
+        const music = document.getElementById('music'); // Audio de fondo
+
+        // Función para iniciar el flujo principal
+        function iniciarFlujoPrincipal() {
+            gifAnimado.style.display = 'none'; // Oculta el GIF animado
+            gifBienvenida.style.display = 'block'; // Muestra el GIF de bienvenida
+
+            // Reproduce el GIF de bienvenida y cambia al GIF de información en bucle
+            setTimeout(() => {
+                gifBienvenida.style.display = 'none'; // Oculta el GIF de bienvenida
+                gifInformacion.style.display = 'block'; // Muestra el GIF de información
+            }, 20600); // Ajusta este tiempo según la duración del GIF de bienvenida
+
+            // Muestra los botones interactivos
+            setTimeout(() => {
+                botonUbicacion.style.display = "block"; // Muestra el boton de ubicación
+                botonConfirmar.style.display = "block"; // Muestra el boton de confirmación
+            }, 9800);
+
+            // Inicia la música de fondo
+            music.play().catch((error) => {
+                console.log('El audio no pudo reproducirse automáticamente:', error);
+            });
+        }
+
+        // Evento al hacer clic en el GIF inmóvil
+        gifInmovil.addEventListener('click', () => {
+            gifInmovil.style.display = 'none'; // Oculta el GIF inmóvil
+            gifAnimado.style.display = 'block'; // Muestra el GIF animado
+
+            // Espera a que termine el GIF animado para iniciar el flujo principal
+            setTimeout(() => {
+                iniciarFlujoPrincipal();
+            }, 2000); // Ajusta este tiempo a la duración del GIF animado
+        });
+    </script>
+</body>
+</html>
